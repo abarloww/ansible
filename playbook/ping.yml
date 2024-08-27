@@ -1,0 +1,14 @@
+- name: Ping host 10.254.16.8
+  hosts: target_host
+  connection: ssh
+
+  tasks:
+    - name: Ping the target host
+      ping:
+        host: 10.254.16.8
+        count: 1000
+        interval: 1
+
+  vars:
+    target_host:
+      ansible_host: 10.254.16.8
