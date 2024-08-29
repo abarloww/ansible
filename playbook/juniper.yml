@@ -12,7 +12,7 @@
     - name: Save the configuration to a file
       copy:
         content: "{{ running_config.stdout[0] }}"
-        dest: "srx1500_running_config.txt"
+        dest: "/tmp/srx1500_running_config.txt"
 
     - name: Clone the GitHub repository
       git:
@@ -35,6 +35,11 @@
       command: "git commit -am 'Updated running config'"
       args:
         chdir: '/tmp/repo/'
+
+    - name: Push to GitHub
+      command: "git push origin main"
+      args:
+        chdir: '/tmp/repo'
 
     - name: Push config to GitHub
       command: "git push origin main"
