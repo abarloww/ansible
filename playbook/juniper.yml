@@ -41,9 +41,4 @@
       args:
         chdir: '/tmp/repo'
 
-    - name: Push config to GitHub
-      command: "git push origin main"
-      args:
-        chdir: '/tmp/repo'
-
     
