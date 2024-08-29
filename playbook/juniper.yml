@@ -21,6 +21,16 @@
         version: 'main'
         force: no
 
+    - name: Set user email
+      command: "git config user.email alicia.barlow@bell.ca"
+      args: 
+        chdir: '/tmp/repo'
+
+    - name: Set username
+      command: "git config user.name abarloww"
+      args:
+        chdir: '/tmp/repo'
+
     - name: Pull latest changes from the repository
       command: "git pull origin main"
       args:
