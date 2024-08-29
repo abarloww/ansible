@@ -36,13 +36,18 @@
       args:
         chdir: '/tmp/repo'
 
+    - name: Add new config file to Git
+      command: "git add srx1500_running_config.txt"
+      args:
+        chdir: '/tmp/repo/'
+
     - name: Copy the running config to the repository
       copy:
         src: '/tmp/srx1500_running_config.txt'
         dest: '/tmp/repo/srx1500_running_config.txt'
 
     - name: Commit the config to the repository
-      command: "git commit -am 'Updated running config'"
+      command: "git commit -m 'Updated running config'"
       args:
         chdir: '/tmp/repo/'
 
