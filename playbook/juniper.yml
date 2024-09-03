@@ -3,7 +3,7 @@
   hosts: all
   gather_facts: no
   connection: network_cli
-  tasks: 
+  tasks:
     - name: Retrieve the running configuration
       junipernetworks.junos.junos_command:
         commands: "show configuration"
@@ -12,46 +12,46 @@
     - name: Save the configuration to a file
       copy:
         content: "{{ running_config.stdout[0] }}"
-        dest: "{{ ansible_env.TEMP }}\\srx1500_running_config.txt"
+        dest: "{{ ansible_env.TEMP }}/srx1500_running_config.txt"
 
     - name: Clone the GitHub repository
       git:
         repo: 'https://github.com/abarloww/ansible.git'
-        dest: "{{ ansible_env.TEMP }}\\repo"
+        dest: "{{ ansible_env.TEMP }}/repo"
         version: 'main'
-        force: no
+        force: yes  # Use `yes` to ensure the repo is updated
 
     - name: Set user email
       command: "git config user.email alicia.barlow@bell.ca"
-      args: 
-        chdir: "{{ ansible_env.TEMP }}\\repo"
+      args:
+        chdir: "{{ ansible_env.TEMP }}/repo"
 
     - name: Set username
       command: "git config user.name abarloww"
       args:
-        chdir: "{{ ansible_env.TEMP }}\\repo"
+        chdir: "{{ ansible_env.TEMP }}/repo"
 
     - name: Pull latest changes from the repository
       command: "git pull origin main"
       args:
-        chdir: "{{ ansible_env.TEMP }}\\repo"
+        chdir: "{{ ansible_env.TEMP }}/repo"
 
     - name: Copy the running config to the repository
       copy:
-        src: "{{ ansible_env.TEMP }}\\srx1500_running_config.txt"
-        dest: "{{ ansible_env.TEMP }}\\repo\\srx1500_running_config.txt"
-        
+        src: "{{ ansible_env.TEMP }}/srx1500_running_config.txt"
+        dest: "{{ ansible_env.TEMP }}/repo/srx1500_running_config.txt"
+
     - name: Add new config file to Git
       command: "git add srx1500_running_config.txt"
       args:
-        chdir: "{{ ansible_env.TEMP }}\\repo"
+        chdir: "{{ ansible_env.TEMP }}/repo"
 
     - name: Commit the config to the repository
       command: "git commit -m 'Updated running config'"
       args:
-        chdir: "{{ ansible_env.TEMP }}\\repo"
+        chdir: "{{ ansible_env.TEMP }}/repo"
 
     - name: Push to GitHub
       command: "git push origin main"
       args:
-        chdir: "{{ ansible_env.TEMP }}\\repo"
+        chdir: "{{ ansible_env.TEMP }}/repo"
